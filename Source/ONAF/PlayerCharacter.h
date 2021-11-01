@@ -26,13 +26,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Comps")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Comps")
 	UCameraComponent* Camera;
 	
-	/*UPROPERTY(EditDefaultsOnly, Category = "Comps")
-	USkeletalMeshComponent* Mesh;
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Comps")
-	UCapsuleComponent* CollisionCapsule;*/
 
 };
