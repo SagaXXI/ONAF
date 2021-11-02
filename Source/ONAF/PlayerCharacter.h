@@ -25,25 +25,24 @@ public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintPure, Category = "Actions") FORCEINLINE
 	EPlayerRotState GetCurrentState() {return State;}
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Actions")
+	void RunToHallway();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Actions")
+	void RunFromHallway();
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Comps")
 	UCameraComponent* Camera;
-
-	//Used to interact with the environment at different states
-	//void Interact();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Actions")
 	void DoorOpenCloseAnim();
