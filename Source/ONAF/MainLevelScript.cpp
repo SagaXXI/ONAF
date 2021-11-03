@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "LevelSequenceActor.h"
 #include "SecurityGuardController.h"
+#include "Cameras.h"
 
 
 
@@ -21,6 +22,18 @@ void AMainLevelScript::BeginPlay()
 	PlayerController = Cast<ASecurityGuardController>(Player->GetController());
 
 	check(PlayerController);
+
+	//Getting camera widget
+	UCameras* Cameras = PlayerController->CreateCameraWidget();
+	check(Cameras)
+	Cameras->OnPartyRoom1Clicked.AddDynamic(this, &AMainLevelScript::SwitchToPartyRoom1Cam);
+	Cameras->OnPartyRoom2Clicked.AddDynamic(this, &AMainLevelScript::SwitchToPartyRoom2Cam);
+	Cameras->OnHallway1CamClicked.AddDynamic(this, &AMainLevelScript::SwitchToHallway1Cam);
+	Cameras->OnHallway2CamClicked.AddDynamic(this, &AMainLevelScript::SwitchToHallway2Cam);
+	Cameras->OnExitBtnClicked.AddDynamic(this, &AMainLevelScript::ExitFromCamSystem);
+
+	FirstCamera = PlayerController->GetViewTarget();
+	
 }
 
 void AMainLevelScript::ActionsOnState()
@@ -66,8 +79,9 @@ void AMainLevelScript::Back()
 
 void AMainLevelScript::Right()
 {
-	PlayerController->CreateWidgetBasedOnBool();
+	PlayerController->SwitchWidgetVisibility();
 }
+
 
 void AMainLevelScript::Left()
 {
@@ -97,3 +111,33 @@ void AMainLevelScript::Left()
 	}
 }
 
+void AMainLevelScript::SwitchToPartyRoom1Cam()
+{
+	PlayerController->SetViewTargetWithBlend(PartyRoom1Cam, BlendTime);
+	PlayerController->SwitchWidgetVisibility();
+}
+
+void AMainLevelScript::SwitchToPartyRoom2Cam()
+{
+	PlayerController->SetViewTargetWithBlend(PartyRoom2Cam, BlendTime);
+	PlayerController->SwitchWidgetVisibility();
+	
+}
+
+void AMainLevelScript::SwitchToHallway1Cam()
+{
+	PlayerController->SetViewTargetWithBlend(Hallway1Cam, BlendTime);
+	PlayerController->SwitchWidgetVisibility();
+}
+
+void AMainLevelScript::SwitchToHallway2Cam()
+{
+	PlayerController->SetViewTargetWithBlend(Hallway2Cam, BlendTime);
+	PlayerController->SwitchWidgetVisibility();
+}
+
+void AMainLevelScript::ExitFromCamSystem()
+{
+	PlayerController->SwitchWidgetVisibility();
+	PlayerController->SetViewTargetWithBlend(FirstCamera, BlendTime);
+}

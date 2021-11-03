@@ -14,16 +14,21 @@ class ONAF_API ASecurityGuardController : public APlayerController
 {
 	GENERATED_BODY()
 
-	class UUserWidget* CameraWidget = nullptr;
+	class UCameras* CameraWidget = nullptr;
 	
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	void CreateWidgetBasedOnBool();
+	UCameras* CreateCameraWidget();
+	
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void SwitchWidgetVisibility();
 
 protected:
 	//Controlling the camera system and spawning camera widget
 	// The class that will be used to Spawn a widget
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI", meta = (BlueprintProtected = true))
-	TSubclassOf<class UUserWidget> WidgetToSpawn;
+	TSubclassOf<class UCameras> WidgetToSpawn;
+
+	virtual void BeginPlay() override;
 };

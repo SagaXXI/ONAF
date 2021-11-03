@@ -34,7 +34,26 @@ class ONAF_API AMainLevelScript : public ALevelScriptActor
 
 	//Bool which will control bool flow (Flip flop) (On running to the hallway and running from the hallway)
 	bool bIsInHallway = false;
+
+	//Camera switching control functions
+
+	UFUNCTION()
+	void SwitchToPartyRoom1Cam();
 	
+	UFUNCTION()
+	void SwitchToPartyRoom2Cam();
+
+	UFUNCTION()
+	void SwitchToHallway1Cam();
+
+	UFUNCTION()
+	void SwitchToHallway2Cam();
+
+	UFUNCTION()
+	void ExitFromCamSystem();
+
+	//First (Player's real) Camera
+	AActor* FirstCamera = nullptr;
 public:
 
 	class APlayerCharacter* Player;
@@ -52,6 +71,26 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "FX")
 	USoundBase* DoorSound;
+
+	//Camera references
+	UPROPERTY(EditAnywhere, Category = "Cameras")
+	AActor* PartyRoom1Cam;
+
+	UPROPERTY(EditAnywhere, Category = "Cameras")
+	AActor* PartyRoom2Cam;
+
+	UPROPERTY(EditAnywhere, Category = "Cameras")
+	AActor* Hallway1Cam;
+
+	UPROPERTY(EditAnywhere, Category = "Cameras")
+	AActor* Hallway2Cam;
+
+	//Time to blend between cameras
+	UPROPERTY(EditAnywhere, Category = "Cameras")
+	float BlendTime = 0.75;
+
+	
+
 
 	
 	

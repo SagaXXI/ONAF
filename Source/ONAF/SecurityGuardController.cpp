@@ -3,24 +3,51 @@
 
 #include "SecurityGuardController.h"
 #include "Blueprint/UserWidget.h"
+#include "Cameras.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
-void ASecurityGuardController::CreateWidgetBasedOnBool()
+void ASecurityGuardController::BeginPlay()
+{
+}
+
+UCameras* ASecurityGuardController::CreateCameraWidget()
+{
+	//Spawning the widget and hiding it
+	if(IsValid(WidgetToSpawn))
+	{
+		CameraWidget = CreateWidget<UCameras>(this, WidgetToSpawn, TEXT("CameraWidget"));
+		if(CameraWidget)
+		{
+			CameraWidget->AddToViewport();
+			CameraWidget->SetVisibility(ESlateVisibility::Hidden);
+			return CameraWidget;
+		}		
+	}
+	//If we couldn't spawn it, then throwing an error
+	UE_LOG(LogTemp, Error, TEXT("Error at spawning widget"))
+	return nullptr;
+
+}
+
+void ASecurityGuardController::SwitchWidgetVisibility()
 {
 	//If camera widget is already spawned, then deleting it and giving a null value
-	if(CameraWidget)
+	if(CameraWidget->GetVisibility() == ESlateVisibility::Visible)
 	{
-		CameraWidget->RemoveFromParent();
-		CameraWidget = nullptr;
-		
+		CameraWidget->SetVisibility(ESlateVisibility::Hidden);
+		UWidgetBlueprintLibrary::SetInputMode_GameOnly(this);
+		SetShowMouseCursor(false);
 	}
 	//Else spawning camera widget normally
 	else
 	{
-		if(IsValid(WidgetToSpawn))
-		{
-			CameraWidget = CreateWidget<UUserWidget>(this, WidgetToSpawn, TEXT("CameraWidget"));
-			if(CameraWidget) CameraWidget->AddToViewport();
-			else UE_LOG(LogTemp, Error, TEXT("Error at spawning widget"))
-		}
+		CameraWidget->SetVisibility(ESlateVisibility::Visible);
+		
+		//Setting input mode only UI
+		UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
+			this, CameraWidget);
+		
+		SetShowMouseCursor(true);
 	}
 }
+
