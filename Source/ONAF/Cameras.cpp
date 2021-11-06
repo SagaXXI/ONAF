@@ -2,7 +2,6 @@
 
 
 #include "Cameras.h"
-
 #include "Components/Button.h"
 
 void UCameras::NativeConstruct()
@@ -31,7 +30,6 @@ void UCameras::NativeConstruct()
 	}
 }
 
-//TODO finish the widget and create delegates (events) in c++ to handle the buttons clicked functions and place cameras in the world
 void UCameras::PartyRoomCam1Clicked()
 {
 	OnPartyRoom1Clicked.Broadcast();

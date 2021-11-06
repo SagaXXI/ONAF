@@ -113,31 +113,31 @@ void AMainLevelScript::Left()
 
 void AMainLevelScript::SwitchToPartyRoom1Cam()
 {
-	PlayerController->SetViewTargetWithBlend(PartyRoom1Cam, BlendTime);
+	PlayerController->SetViewTarget(PartyRoom1Cam);
 	PlayerController->SwitchWidgetVisibility();
 }
 
 void AMainLevelScript::SwitchToPartyRoom2Cam()
 {
-	PlayerController->SetViewTargetWithBlend(PartyRoom2Cam, BlendTime);
+	PlayerController->SetViewTarget(PartyRoom2Cam);
 	PlayerController->SwitchWidgetVisibility();
 	
 }
 
 void AMainLevelScript::SwitchToHallway1Cam()
 {
-	PlayerController->SetViewTargetWithBlend(Hallway1Cam, BlendTime);
+	PlayerController->SetViewTarget(Hallway1Cam);
 	PlayerController->SwitchWidgetVisibility();
 }
 
 void AMainLevelScript::SwitchToHallway2Cam()
 {
-	PlayerController->SetViewTargetWithBlend(Hallway2Cam, BlendTime);
+	PlayerController->SetViewTarget(Hallway2Cam);
 	PlayerController->SwitchWidgetVisibility();
 }
 
 void AMainLevelScript::ExitFromCamSystem()
 {
 	PlayerController->SwitchWidgetVisibility();
-	PlayerController->SetViewTargetWithBlend(FirstCamera, BlendTime);
+	PlayerController->SetViewTarget(FirstCamera);
 }

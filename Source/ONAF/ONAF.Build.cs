@@ -8,7 +8,8 @@ public class ONAF : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay",  "LevelSequence", "MovieScene", "UMG" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay",
+			"LevelSequence", "MovieScene", "UMG", "NavigationSystem","GameplayTasks" });
 		
 	}
 }

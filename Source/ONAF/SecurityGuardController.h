@@ -30,5 +30,4 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI", meta = (BlueprintProtected = true))
 	TSubclassOf<class UCameras> WidgetToSpawn;
 
-	virtual void BeginPlay() override;
 };

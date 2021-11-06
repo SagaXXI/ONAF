@@ -6,9 +6,6 @@
 #include "Cameras.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
-void ASecurityGuardController::BeginPlay()
-{
-}
 
 UCameras* ASecurityGuardController::CreateCameraWidget()
 {

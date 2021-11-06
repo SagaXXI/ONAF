@@ -85,13 +85,5 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Cameras")
 	AActor* Hallway2Cam;
 
-	//Time to blend between cameras
-	UPROPERTY(EditAnywhere, Category = "Cameras")
-	float BlendTime = 0.75;
-
-	
-
-
-	
 	
 };
