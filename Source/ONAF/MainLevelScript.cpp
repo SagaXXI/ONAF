@@ -59,7 +59,7 @@ void AMainLevelScript::ActionsOnState()
 
 void AMainLevelScript::Front()
 {
-	
+	//Later I will add some functionality to it
 }
 
 void AMainLevelScript::Back()
@@ -68,11 +68,13 @@ void AMainLevelScript::Back()
 	if (bIsInHallway)
 	{
 		Player->RunFromHallway();
+		PlayerController->SetIsAtMusicBox(false);
 	}
 	//Else run to the hallway
 	else
 	{
 		Player->RunToHallway();
+		PlayerController->SetIsAtMusicBox(true);
 	}
 	bIsInHallway = !bIsInHallway;
 }

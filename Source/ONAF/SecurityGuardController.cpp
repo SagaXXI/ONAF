@@ -26,6 +26,25 @@ UCameras* ASecurityGuardController::CreateCameraWidget()
 
 }
 
+void ASecurityGuardController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if(bIsAtMusicBox)
+	{
+		MusicBoxPercent += MusicBoxPercentIncrement;
+		if(MusicBoxPercent > 1.f)
+		{
+			MusicBoxPercent = 1.f;
+		}
+
+		OnMusicBoxPercentChange.Broadcast(MusicBoxPercent);
+	}
+	else
+	{
+		MusicBoxPercent -= MusicBoxPercentDecrement;
+		OnMusicBoxPercentChange.Broadcast(MusicBoxPercent);
+	}
+}
 void ASecurityGuardController::SwitchWidgetVisibility()
 {
 	//If camera widget is already spawned, then deleting it and giving a null value

@@ -11,7 +11,7 @@ UCLASS()
 class ONAF_API AAIAnimatronic : public ACharacter
 {
 	GENERATED_BODY()
-
+	
 public:
 	// Sets default values for this character's properties
 	AAIAnimatronic();

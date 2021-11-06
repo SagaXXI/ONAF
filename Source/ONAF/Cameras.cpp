@@ -2,7 +2,9 @@
 
 
 #include "Cameras.h"
+#include "SecurityGuardController.h"
 #include "Components/Button.h"
+#include "Components/ProgressBar.h"
 
 void UCameras::NativeConstruct()
 {
@@ -27,6 +29,12 @@ void UCameras::NativeConstruct()
 	if(ExitBtn)
 	{
 		ExitBtn->OnClicked.AddDynamic(this, &UCameras::ExitBtnClicked);
+	}
+
+	ASecurityGuardController* PlayerController = Cast<ASecurityGuardController>(GetOwningPlayer());
+	if(MusicBoxProgress && PlayerController)
+	{
+		PlayerController->OnMusicBoxPercentChange.AddDynamic(this, &UCameras::SetMusicBoxPercent);
 	}
 }
 
@@ -53,4 +61,9 @@ void UCameras::Hallway2CamClicked()
 void UCameras::ExitBtnClicked()
 {
 	OnExitBtnClicked.Broadcast();
+}
+
+void UCameras::SetMusicBoxPercent(float NewPercent)
+{
+	MusicBoxProgress->SetPercent(NewPercent);
 }

@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+
+
 UENUM(BlueprintType)
 enum  EPlayerRotState
 {
@@ -20,7 +22,6 @@ UCLASS()
 class ONAF_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
-	
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();

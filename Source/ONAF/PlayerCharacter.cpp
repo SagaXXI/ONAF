@@ -12,15 +12,11 @@ APlayerCharacter::APlayerCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Input
-
 void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +25,7 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 		
 }
+
 
 
 

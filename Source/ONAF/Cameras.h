@@ -37,6 +37,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* ExitBtn;
 
+	//Music box stuff
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UProgressBar* MusicBoxProgress;
+
 	//Functions to handle the buttons
 	UFUNCTION()
 	void PartyRoomCam1Clicked();
@@ -52,6 +56,10 @@ protected:
 
 	UFUNCTION()
 	void ExitBtnClicked();
+
+	//Setting the music box percentage
+	UFUNCTION()
+	void SetMusicBoxPercent(float NewPercent);
 
 	//Delegates for the functions
 public:
