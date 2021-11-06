@@ -5,7 +5,15 @@
 #include "Blueprint/UserWidget.h"
 #include "Cameras.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
+void ASecurityGuardController::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	//Starting tracking time
+	GetWorldTimerManager().SetTimer(HourPassedHandle, this, &ASecurityGuardController::TimeTracking, OneHourDurationInSec, true);
+}
 
 UCameras* ASecurityGuardController::CreateCameraWidget()
 {
@@ -36,15 +44,58 @@ void ASecurityGuardController::Tick(float DeltaSeconds)
 		{
 			MusicBoxPercent = 1.f;
 		}
-
-		OnMusicBoxPercentChange.Broadcast(MusicBoxPercent);
 	}
 	else
 	{
 		MusicBoxPercent -= MusicBoxPercentDecrement;
-		OnMusicBoxPercentChange.Broadcast(MusicBoxPercent);
+
+		if(MusicBoxPercent == 0.f)
+		{
+			CameraWidget->RemoveFromParent();
+			UUserWidget* GameOver = CreateWidget<UUserWidget>(this, GameOverWidget, TEXT("GameOver"));
+			if(GameOver)
+			{
+				GameOver->AddToViewport();
+				UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
+				this, GameOver);
+				SetShowMouseCursor(true);
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Music box has expired! Try again!"));
+			}	
+		}
 	}
+	OnMusicBoxPercentChange.Broadcast(MusicBoxPercent);
 }
+
+
+void ASecurityGuardController::TimeTracking()
+{
+	if(CurrentTime == 12)
+	{
+		CurrentTime = 1;
+	}
+	else
+	{
+		if(CurrentTime == 5)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), VictorySound);
+			CameraWidget->RemoveFromParent();
+			UUserWidget* GameWin= CreateWidget<UUserWidget>(this, GameWinWidget, TEXT("GameOver"));
+			if(GameWin)
+			{
+				GameWin->AddToViewport();
+				//Setting input mode only UI
+				UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
+					this, GameWin);
+		
+				SetShowMouseCursor(true);
+			}	
+			
+		}
+		CurrentTime++;
+	}
+	OnTimeChanged.Broadcast(CurrentTime);
+}
+
 void ASecurityGuardController::SwitchWidgetVisibility()
 {
 	//If camera widget is already spawned, then deleting it and giving a null value

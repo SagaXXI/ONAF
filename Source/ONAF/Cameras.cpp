@@ -5,6 +5,7 @@
 #include "SecurityGuardController.h"
 #include "Components/Button.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
 
 void UCameras::NativeConstruct()
 {
@@ -32,9 +33,17 @@ void UCameras::NativeConstruct()
 	}
 
 	ASecurityGuardController* PlayerController = Cast<ASecurityGuardController>(GetOwningPlayer());
-	if(MusicBoxProgress && PlayerController)
+	check(PlayerController)
+	
+	if(MusicBoxProgress)
 	{
 		PlayerController->OnMusicBoxPercentChange.AddDynamic(this, &UCameras::SetMusicBoxPercent);
+	}
+
+	if(Time)
+	{
+		Time->SetText(FText::AsNumber(12));
+		PlayerController->OnTimeChanged.AddDynamic(this, &UCameras::SetNewTime);
 	}
 }
 
@@ -66,4 +75,9 @@ void UCameras::ExitBtnClicked()
 void UCameras::SetMusicBoxPercent(float NewPercent)
 {
 	MusicBoxProgress->SetPercent(NewPercent);
+}
+
+void UCameras::SetNewTime(int32 NewTime)
+{
+	Time->SetText(FText::AsNumber(NewTime));
 }

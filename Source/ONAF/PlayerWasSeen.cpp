@@ -19,7 +19,7 @@ EBTNodeResult::Type UPlayerWasSeen::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	if(AIController && BBComp)
 	{
 		//Setting the max walk speed
-		//TODO add fx, and timer, disable input on actions, add music box
+		//TODO add fx, disable input on actions, add game over through the enum
 		ACharacter* AICharacter = Cast<ACharacter>(AIController->GetPawn());
 
 		check(AICharacter)

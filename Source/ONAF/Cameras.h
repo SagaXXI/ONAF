@@ -41,6 +41,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UProgressBar* MusicBoxProgress;
 
+	//Time tracking
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* Time;
+
 	//Functions to handle the buttons
 	UFUNCTION()
 	void PartyRoomCam1Clicked();
@@ -61,8 +65,13 @@ protected:
 	UFUNCTION()
 	void SetMusicBoxPercent(float NewPercent);
 
-	//Delegates for the functions
+	//Setting the time
+	UFUNCTION()
+	void SetNewTime(int32 NewTime);
+
 public:
+	
+	//Delegates for the functions
 	FOnPartyRoom1Clicked OnPartyRoom1Clicked;
 	FOnPartyRoom2Clicked OnPartyRoom2Clicked;
 	FOnHallway1CamClicked OnHallway1CamClicked;
@@ -70,3 +79,4 @@ public:
 	FOnExitBtnClicked OnExitBtnClicked;
     	
 };
+

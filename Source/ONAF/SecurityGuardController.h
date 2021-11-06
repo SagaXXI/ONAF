@@ -7,6 +7,7 @@
 #include "SecurityGuardController.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMusicBoxPercentChange, float, Percent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTimeChanged, int32, NewTime);
 
 UCLASS()
 class ONAF_API ASecurityGuardController : public APlayerController
@@ -17,11 +18,17 @@ class ONAF_API ASecurityGuardController : public APlayerController
 
 	//Variable to control whether player is at the music box or not
 	bool bIsAtMusicBox = false;
+
+	//Current time in game
+	int32 CurrentTime = 12;
 	
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	UCameras* CreateCameraWidget();
+
+	UFUNCTION(BlueprintPure, Category = "UI") FORCEINLINE
+	UCameras* GetCameraWidget() { return CameraWidget;}
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SwitchWidgetVisibility();
@@ -34,13 +41,25 @@ public:
 
 	FOnMusicBoxPercentChange OnMusicBoxPercentChange;
 
+	FOnTimeChanged OnTimeChanged;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
+	TSubclassOf<class UUserWidget> GameOverWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
+	TSubclassOf<class UUserWidget> GameWinWidget;
+	
 protected:
+
+	void Tick(float DeltaSeconds) override;
+	
+	virtual void BeginPlay() override;
 	//Controlling the camera system and spawning camera widget
 	// The class that will be used to Spawn a widget
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI", meta = (BlueprintProtected = true))
 	TSubclassOf<class UCameras> WidgetToSpawn;
 
-	void Tick(float DeltaSeconds) override;
+	//Music box stuff
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MusicBox")
 	float MusicBoxPercent = 1.f;
@@ -50,5 +69,19 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MusicBox", meta = (BlueprintProtected = true))
 	float MusicBoxPercentDecrement = 0.005f;
+
+	//Time tracking stuff
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", meta = (BlueprintProtected = true))
+	float OneHourDurationInSec = 60.f;
+
+	FTimerHandle HourPassedHandle;
+	
+	void TimeTracking();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", meta = (BlueprintProtected = true))
+	USoundBase* VictorySound;
+
+
 
 };
