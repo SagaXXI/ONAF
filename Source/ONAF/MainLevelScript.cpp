@@ -38,23 +38,27 @@ void AMainLevelScript::BeginPlay()
 
 void AMainLevelScript::ActionsOnState()
 {
+	Player->SetCanRotate(false);
 	switch(Player->GetCurrentState())
 	{
 		case EFront:
 			Front();
+			Player->SetCanRotate(true);
 			break;
 		case EBack:
 			Back();
+		if(!bIsInHallway) Player->SetCanRotate(true);
 			break;
 		case ERight:
 			Right();
+			Player->SetCanRotate(true);
 			break;
 		case ELeft:
 			Left();
+			Player->SetCanRotate(true);
 			break;
 	default: ;
 	}
-	
 }
 
 void AMainLevelScript::Front()
@@ -83,7 +87,6 @@ void AMainLevelScript::Right()
 {
 	PlayerController->SwitchWidgetVisibility();
 }
-
 
 void AMainLevelScript::Left()
 {

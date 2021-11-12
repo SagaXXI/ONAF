@@ -26,6 +26,11 @@ void APlayerCharacter::BeginPlay()
 		
 }
 
+void APlayerCharacter::SetCanRotate(bool NewState)
+{
+	bCanRotate = NewState;
+}
+
 
 
 

@@ -85,5 +85,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Cameras")
 	AActor* Hallway2Cam;
 
+
+
 	
 };

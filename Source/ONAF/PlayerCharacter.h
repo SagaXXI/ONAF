@@ -37,6 +37,12 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Actions")
 	void RunFromHallway();
+
+	UFUNCTION(BlueprintPure, Category = "Input") FORCEINLINE
+	bool GetCanRotate() {return bCanRotate;}
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SetCanRotate(bool NewState);
 	
 protected:
 	// Called when the game starts or when spawned
@@ -51,5 +57,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Actions", meta = (BlueprintProtected = true))
 	TEnumAsByte <EPlayerRotState> State;
 	
-
+	//Variable used to prevent rotating while doing advanced actions, like going to the hallway
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input", meta = (BlueprintProtected = true))
+	bool bCanRotate = true;
+	
 };
