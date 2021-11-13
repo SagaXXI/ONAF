@@ -41,6 +41,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UProgressBar* MusicBoxProgress;
 
+	//Power stuff
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UProgressBar* PowerProgress;
+
 	//Time tracking
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* Time;
@@ -65,6 +69,10 @@ protected:
 	UFUNCTION()
 	void SetMusicBoxPercent(float NewPercent);
 
+	//Setting power percentage
+	UFUNCTION()
+	void SetPowerPercent(float NewPercent);
+	
 	//Setting the time
 	UFUNCTION()
 	void SetNewTime(int32 NewTime);

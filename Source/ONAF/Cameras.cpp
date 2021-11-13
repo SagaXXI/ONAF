@@ -45,6 +45,11 @@ void UCameras::NativeConstruct()
 		Time->SetText(FText::AsNumber(12));
 		PlayerController->OnTimeChanged.AddDynamic(this, &UCameras::SetNewTime);
 	}
+
+	if(PowerProgress)
+	{
+		PlayerController->OnPowerPercentChange.AddDynamic(this, &UCameras::SetPowerPercent);
+	}
 }
 
 void UCameras::PartyRoomCam1Clicked()
@@ -75,6 +80,11 @@ void UCameras::ExitBtnClicked()
 void UCameras::SetMusicBoxPercent(float NewPercent)
 {
 	MusicBoxProgress->SetPercent(NewPercent);
+}
+
+void UCameras::SetPowerPercent(float NewPercent)
+{
+	PowerProgress->SetPercent(NewPercent);
 }
 
 void UCameras::SetNewTime(int32 NewTime)

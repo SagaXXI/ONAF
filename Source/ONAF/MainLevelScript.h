@@ -35,6 +35,9 @@ class ONAF_API AMainLevelScript : public ALevelScriptActor
 	//Bool which will control bool flow (Flip flop) (On running to the hallway and running from the hallway)
 	bool bIsInHallway = false;
 
+	//Class used to open and close the door
+	class ALevelSequenceActor* LevelSeqActor = nullptr;
+
 	//Camera switching control functions
 
 	UFUNCTION()
@@ -62,6 +65,8 @@ public:
 protected:
 	void BeginPlay() override;
 
+	void Tick(float DeltaSeconds) override;
+
 	// Sequence Assets
 	UPROPERTY()
 	ULevelSequencePlayer* SequencePlayer;
@@ -85,6 +90,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Cameras")
 	AActor* Hallway2Cam;
 
+	//Function used to call when the power is gone (basically, just closing the door and playing sound
+	void CloseDoor();
+
+	//Sound which will be called when the power is gone
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX", meta = (BlueprintProtected = true))
+	USoundBase* PowerGoneSound;
+
+	//Puppet jumpscare
+	UFUNCTION(BlueprintImplementableEvent, Category = "MusicBox")
+	void PuppetJumpscare();
 
 
 	

@@ -8,6 +8,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMusicBoxPercentChange, float, Percent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTimeChanged, int32, NewTime);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPowerPercentChange, float, Percent);
 
 UCLASS()
 class ONAF_API ASecurityGuardController : public APlayerController
@@ -43,11 +44,22 @@ public:
 
 	FOnTimeChanged OnTimeChanged;
 
+	FOnPowerPercentChange OnPowerPercentChange;
+
+	//Game win or over stuff
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
 	TSubclassOf<class UUserWidget> GameOverWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
 	TSubclassOf<class UUserWidget> GameWinWidget;
+
+	//Power stuff
+	UFUNCTION(BlueprintPure, Category = "Power") FORCEINLINE
+	float GetPower() {return Power;}
+
+	UFUNCTION(BlueprintCallable, Category = "Power")
+	void DecreasePower();
+	
 	
 protected:
 
@@ -70,6 +82,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MusicBox", meta = (BlueprintProtected = true))
 	float MusicBoxPercentDecrement = 0.005f;
 
+	UFUNCTION(BlueprintCallable, Category = "MusicBox")
+	void MusicBoxProgressChange();
+
 	//Time tracking stuff
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", meta = (BlueprintProtected = true))
@@ -82,6 +97,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", meta = (BlueprintProtected = true))
 	USoundBase* VictorySound;
 
+	//Power stuff
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Power", meta = (BlueprintProtected = true))
+	float Power = 1.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Power", meta = (BlueprintProtected = true))
+	float PowerDecrement = 0.00015f;
 
+	//Called on different game states
+	void GameWin();
+
+	void GameOver();
 };

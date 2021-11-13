@@ -15,6 +15,9 @@ void AMainLevelScript::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = true;
+	
 	Player = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	check(Player);
@@ -22,7 +25,17 @@ void AMainLevelScript::BeginPlay()
 	PlayerController = Cast<ASecurityGuardController>(Player->GetController());
 
 	check(PlayerController);
+	
+	for (TActorIterator<ALevelSequenceActor> it(GetWorld()); it; ++it)
+	{
+		LevelSeqActor = *it;
 
+		//if we found it, then break the game
+		if (LevelSeqActor->GetName() == TEXT("LeftDoor")) break;
+	}
+
+	check(LevelSeqActor)
+	
 	//Getting camera widget
 	UCameras* Cameras = PlayerController->CreateCameraWidget();
 	check(Cameras)
@@ -35,6 +48,25 @@ void AMainLevelScript::BeginPlay()
 	FirstCamera = PlayerController->GetViewTarget();
 	
 }
+void AMainLevelScript::Tick(float DeltaSeconds)
+{
+	UE_LOG(LogTemp, Warning, TEXT("adkfasl"))
+	Super::Tick(DeltaSeconds);
+	if(!bIsDoorOpen)
+	{
+		PlayerController->DecreasePower();
+	}
+	if(PlayerController->GetMusicBoxPercent() < 0.f)
+	{
+		//Jumpscare if the music box percentage is 0
+		PuppetJumpscare();
+	}
+	if(PlayerController->GetPower() < 0.f)
+	{
+		CloseDoor();
+	}
+}
+
 
 void AMainLevelScript::ActionsOnState()
 {
@@ -91,29 +123,17 @@ void AMainLevelScript::Right()
 void AMainLevelScript::Left()
 {
 	//Find the right level sequence actor in the world
-	ALevelSequenceActor* LevelSeqActor = nullptr;
-	for (TActorIterator<ALevelSequenceActor> it(GetWorld()); it; ++it)
+	if (bIsDoorOpen)
 	{
-		LevelSeqActor = *it;
-
-		//if we found it, then break the game
-		if (LevelSeqActor->GetName() == TEXT("LeftDoor")) break;
+		LevelSeqActor->SequencePlayer->Play();
+		UGameplayStatics::PlaySound2D(GetWorld(), DoorSound, 1, 3);
 	}
-
-	if(LevelSeqActor)
+	else
 	{
-		if (bIsDoorOpen)
-		{
-			LevelSeqActor->SequencePlayer->Play();
-			UGameplayStatics::PlaySound2D(GetWorld(), DoorSound, 1, 3);
-		}
-		else
-		{
-			LevelSeqActor->SequencePlayer->PlayReverse();
-			UGameplayStatics::PlaySound2D(GetWorld(), DoorSound, 1, 3);
-		}
-		bIsDoorOpen = !bIsDoorOpen;
+		LevelSeqActor->SequencePlayer->PlayReverse();
+		UGameplayStatics::PlaySound2D(GetWorld(), DoorSound, 1, 3);
 	}
+	bIsDoorOpen = !bIsDoorOpen;
 }
 
 void AMainLevelScript::SwitchToPartyRoom1Cam()
@@ -145,4 +165,9 @@ void AMainLevelScript::ExitFromCamSystem()
 {
 	PlayerController->SwitchWidgetVisibility();
 	PlayerController->SetViewTarget(FirstCamera);
+}
+void AMainLevelScript::CloseDoor()
+{
+	LevelSeqActor->SequencePlayer->PlayReverse();
+	UGameplayStatics::PlaySound2D(GetWorld(), PowerGoneSound);
 }

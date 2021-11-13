@@ -60,5 +60,5 @@ protected:
 	//Variable used to prevent rotating while doing advanced actions, like going to the hallway
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input", meta = (BlueprintProtected = true))
 	bool bCanRotate = true;
-	
+
 };
