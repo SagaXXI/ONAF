@@ -34,8 +34,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SwitchWidgetVisibility();
 	
-	FORCEINLINE UFUNCTION(Category = "MusicBox") 
-	void SetIsAtMusicBox(bool NewState) {bIsAtMusicBox = NewState; }
+	UFUNCTION(Category = "MusicBox") 
+	void SetIsAtMusicBox(bool NewState);
 
 	UFUNCTION(BlueprintPure, Category = "MusicBox") FORCEINLINE
 	float GetMusicBoxPercent() { return MusicBoxPercent; }
@@ -53,12 +53,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
 	TSubclassOf<class UUserWidget> GameWinWidget;
 
+	UFUNCTION(BlueprintCallable, Category = "GameOver")
+	void SetbIsGameOver(bool NewState);
+
 	//Power stuff
 	UFUNCTION(BlueprintPure, Category = "Power") FORCEINLINE
 	float GetPower() {return Power;}
 
 	UFUNCTION(BlueprintCallable, Category = "Power")
 	void DecreasePower();
+	
 	
 	
 protected:
@@ -104,8 +108,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Power", meta = (BlueprintProtected = true))
 	float PowerDecrement = 0.00015f;
 
+	//Game win or over control stuff
+	
 	//Called on different game states
 	void GameWin();
 
 	void GameOver();
+	
+	bool bIsGameOver = false;
 };

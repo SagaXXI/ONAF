@@ -7,8 +7,9 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
-//TODO create events when player dies and fix the mouse bug with the gameover and gamewin,
-//fix the puppet jumpscare(mb implement her mechanics in bt and bb)
+//TODO fix the puppet jumpscare(mb implement her mechanics in bt and bb)
+//make player turn towards freddy when freddy kills him
+//Maybe (maybe) move everything(blueprint decorators and all that stuff) to cpp
 
 void ASecurityGuardController::BeginPlay()
 {
@@ -64,16 +65,6 @@ void ASecurityGuardController::MusicBoxProgressChange()
 
 		if(MusicBoxPercent == 0.f)
 		{
-			/*CameraWidget->RemoveFromParent();
-			UUserWidget* GameOver = CreateWidget<UUserWidget>(this, GameOverWidget, TEXT("GameOver"));
-			if(GameOver)
-			{
-				GameOver->AddToViewport();
-				UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
-				this, GameOver);
-				SetShowMouseCursor(true);
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Music box has expired! Try again!"));
-			}	*/
 		}
 	}
 	OnMusicBoxPercentChange.Broadcast(MusicBoxPercent);
@@ -82,40 +73,49 @@ void ASecurityGuardController::MusicBoxProgressChange()
 
 void ASecurityGuardController::TimeTracking()
 {
-	if(CurrentTime == 12)
+	if(!bIsGameOver)
 	{
-		CurrentTime = 1;
+		if(CurrentTime == 12)
+		{
+			CurrentTime = 1;
+		}
+		else
+		{
+			if(CurrentTime == 5)
+			{
+				GameWin();
+			}
+			CurrentTime++;
+		}
+		OnTimeChanged.Broadcast(CurrentTime);
 	}
 	else
 	{
-		if(CurrentTime == 5)
-		{
-			GameWin();
-		}
-		CurrentTime++;
+		GetWorldTimerManager().ClearTimer(HourPassedHandle);
 	}
-	OnTimeChanged.Broadcast(CurrentTime);
+	
+	
 }
 
 void ASecurityGuardController::GameWin()
 {
 	UGameplayStatics::PlaySound2D(GetWorld(), VictorySound);
 	CameraWidget->RemoveFromParent();
-	UUserWidget* GameWin= CreateWidget<UUserWidget>(this, GameWinWidget, TEXT("GameOver"));
+	UUserWidget* GameWin = CreateWidget<UUserWidget>(this, GameWinWidget, TEXT("GameOver"));
 	if(GameWin)
 	{
 		GameWin->AddToViewport();
 		//Setting input mode only UI
 		/*UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
 			this, GameWin);*/
-		UWidgetBlueprintLibrary::SetInputMode_UIOnly(this, GameWin);
-		
 		SetShowMouseCursor(true);
+		UWidgetBlueprintLibrary::SetInputMode_UIOnly(this, GameWin);
 	}	
 }
 
 void ASecurityGuardController::GameOver()
 {
+	bIsGameOver = true;
 	CameraWidget->RemoveFromParent();
 	UUserWidget* GameOver = CreateWidget<UUserWidget>(this, GameOverWidget, TEXT("GameOver"));
 	if(GameOver)
@@ -123,14 +123,14 @@ void ASecurityGuardController::GameOver()
 		GameOver->AddToViewport();
 		/*UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
 		this, GameOver);*/
-		UWidgetBlueprintLibrary::SetInputMode_UIOnly(this, GameOver);
 		SetShowMouseCursor(true);
+		UWidgetBlueprintLibrary::SetInputMode_UIOnly(this, GameOver);
 	}
 }
 
 void ASecurityGuardController::SwitchWidgetVisibility()
 {
-	//If camera widget is already spawned, then deleting it and giving a null value
+	//If camera widget is already spawned, then hiding it
 	if(CameraWidget->GetVisibility() == ESlateVisibility::Visible)
 	{
 		CameraWidget->SetVisibility(ESlateVisibility::Hidden);
@@ -150,8 +150,19 @@ void ASecurityGuardController::SwitchWidgetVisibility()
 	}
 }
 
+
 void ASecurityGuardController::DecreasePower()
 {
 	Power -= PowerDecrement;
 	OnPowerPercentChange.Broadcast(Power);
+}
+
+void ASecurityGuardController::SetIsAtMusicBox(bool NewState)
+{
+	bIsAtMusicBox = NewState;
+}
+
+void ASecurityGuardController::SetbIsGameOver(bool NewState)
+{
+	bIsGameOver = NewState;
 }
