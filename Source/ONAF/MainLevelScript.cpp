@@ -56,12 +56,12 @@ void AMainLevelScript::Tick(float DeltaSeconds)
 	{
 		PlayerController->DecreasePower();
 	}
-	if(PlayerController->GetMusicBoxPercent() < 0.f)
+	if(PlayerController->GetMusicBoxPercent() <= 0.f)
 	{
 		//Jumpscare if the music box percentage is 0
 		PuppetJumpscare();
 	}
-	if(PlayerController->GetPower() < 0.f)
+	if(PlayerController->GetPower() <= 0.f)
 	{
 		CloseDoor();
 	}

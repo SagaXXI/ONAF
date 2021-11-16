@@ -133,6 +133,7 @@ void ASecurityGuardController::SwitchWidgetVisibility()
 	//If camera widget is already spawned, then hiding it
 	if(CameraWidget->GetVisibility() == ESlateVisibility::Visible)
 	{
+		bIsCameraWidgetVisible = false;
 		CameraWidget->SetVisibility(ESlateVisibility::Hidden);
 		UWidgetBlueprintLibrary::SetInputMode_GameOnly(this);
 		SetShowMouseCursor(false);
@@ -140,6 +141,7 @@ void ASecurityGuardController::SwitchWidgetVisibility()
 	//Else spawning camera widget normally
 	else
 	{
+		bIsCameraWidgetVisible = true;
 		CameraWidget->SetVisibility(ESlateVisibility::Visible);
 		
 		//Setting input mode only UI

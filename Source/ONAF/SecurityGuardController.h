@@ -62,6 +62,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Power")
 	void DecreasePower();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraWidgetVisibility")
+	bool bIsCameraWidgetVisible = false;
 	
 	
 	
