@@ -25,10 +25,22 @@ class ONAF_API UMainMenu : public UUserWidget
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* QuitBtn;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UButton* SettingsBtn;
+
+	//Create settings widget 
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void ShowSettings();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SubmenuWidgets", meta = (BlueprintProtected = true))
+	TSubclassOf<class UUserWidget> SettingsWidget;
+	
 	UFUNCTION()
 	void OnContinueClicked();
 
 	UFUNCTION()
 	void OnQuitClicked();
-	
+
+	UFUNCTION()
+	void OnSettingsClicked();
 };

@@ -7,9 +7,11 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
-//TODO fix the puppet jumpscare(mb implement her mechanics in bt and bb)
-//make player turn towards freddy when freddy kills him
+//TODO fix the setting button bug and add tooltips
+//maybe add phone calls
+//Add tooltips (gameplay tutorials)
 //Maybe (maybe) move everything(blueprint decorators and all that stuff) to cpp
+//Fix the packaging stuff (package optimizing)
 
 void ASecurityGuardController::BeginPlay()
 {
@@ -29,6 +31,8 @@ UCameras* ASecurityGuardController::CreateCameraWidget()
 		{
 			CameraWidget->AddToViewport();
 			CameraWidget->SetVisibility(ESlateVisibility::Hidden);
+			//Setting the starter value of power progress bar
+			OnPowerPercentChange.Broadcast(Power);
 			return CameraWidget;
 		}		
 	}
@@ -151,7 +155,6 @@ void ASecurityGuardController::SwitchWidgetVisibility()
 		SetShowMouseCursor(true);
 	}
 }
-
 
 void ASecurityGuardController::DecreasePower()
 {

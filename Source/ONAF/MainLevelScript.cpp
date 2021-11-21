@@ -50,7 +50,6 @@ void AMainLevelScript::BeginPlay()
 }
 void AMainLevelScript::Tick(float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Warning, TEXT("adkfasl"))
 	Super::Tick(DeltaSeconds);
 	if(!bIsDoorOpen)
 	{

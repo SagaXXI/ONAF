@@ -25,12 +25,14 @@ class ONAF_API ASecurityGuardController : public APlayerController
 	
 public:
 
+	//Create and return camera widget
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	UCameras* CreateCameraWidget();
 
 	UFUNCTION(BlueprintPure, Category = "UI") FORCEINLINE
 	UCameras* GetCameraWidget() { return CameraWidget;}
-	
+
+	//Switching camera widget visibility
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SwitchWidgetVisibility();
 	
@@ -47,13 +49,13 @@ public:
 	FOnPowerPercentChange OnPowerPercentChange;
 
 	//Game win or over stuff
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameEnd", meta = (BlueprintProtected = true))
 	TSubclassOf<class UUserWidget> GameOverWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameOver", meta = (BlueprintProtected = true))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameEnd", meta = (BlueprintProtected = true))
 	TSubclassOf<class UUserWidget> GameWinWidget;
 
-	UFUNCTION(BlueprintCallable, Category = "GameOver")
+	UFUNCTION(BlueprintCallable, Category = "")
 	void SetbIsGameOver(bool NewState);
 
 	//Power stuff
@@ -65,8 +67,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraWidgetVisibility")
 	bool bIsCameraWidgetVisible = false;
-	
-	
 	
 protected:
 
