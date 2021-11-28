@@ -7,11 +7,9 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
-//TODO finish the tooltip widget animations (WASD keys and Left mouse button)
-//maybe add phone calls
-//Add tooltips (gameplay tutorials)
+//Add fx (walking sound, freddy beating)
 //Fix the game win after a game over (game win widget is popping out even if freddy killed you right now)
-
+//maybe (maybe) add phone calls
 
 void ASecurityGuardController::BeginPlay()
 {
