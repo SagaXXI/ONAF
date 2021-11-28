@@ -25,7 +25,7 @@ EBTNodeResult::Type UPlayerWasSeen::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		
 		AICharacter->GetCharacterMovement()->MaxWalkSpeed = 500.f;
 		BBComp->SetValueAsVector("LocationToGo", BBComp->GetValueAsVector("PlayerLocation"));
-
+		
 		return EBTNodeResult::Succeeded;
 	}
 

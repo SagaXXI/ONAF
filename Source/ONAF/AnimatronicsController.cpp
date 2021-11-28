@@ -41,7 +41,6 @@ void AAnimatronicsController::OnPossess(APawn* InPawn)
 		BBComp->SetValueAsVector(StartLocation, InPawn->GetActorLocation());
 		BBComp->SetValueAsBool(CanMove, true);
 		BBComp->SetValueAsBool(IsPlayerDead, false);
-		UE_LOG(LogTemp, Warning, TEXT("BBComp is set 1"))
 	}
 }
 
@@ -50,9 +49,7 @@ void AAnimatronicsController::SetPlayerCaught(FVector PawnLocation)
 {
 	if(BBComp)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BBComp is set 2"))
 		BBComp->SetValueAsVector(PlayerLocation, PawnLocation);
-		//BBComp->SetValueAsBool(CanMove, false);
 		BBComp->SetValueAsBool(CanMove, false);
 	}
 	

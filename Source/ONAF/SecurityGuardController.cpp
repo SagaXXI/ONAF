@@ -7,11 +7,11 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
-//TODO fix the setting button bug and add tooltips
+//TODO finish the tooltip widget animations (WASD keys and Left mouse button)
 //maybe add phone calls
 //Add tooltips (gameplay tutorials)
-//Maybe (maybe) move everything(blueprint decorators and all that stuff) to cpp
-//Fix the packaging stuff (package optimizing)
+//Fix the game win after a game over (game win widget is popping out even if freddy killed you right now)
+
 
 void ASecurityGuardController::BeginPlay()
 {

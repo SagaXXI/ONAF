@@ -67,6 +67,14 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraWidgetVisibility")
 	bool bIsCameraWidgetVisible = false;
+
+	//Game win or over control stuff
+	
+	//Called on different game states
+	void GameWin();
+
+	void GameOver();
+	
 	
 protected:
 
@@ -110,13 +118,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Power", meta = (BlueprintProtected = true))
 	float PowerDecrement = 0.00015f;
-
-	//Game win or over control stuff
-	
-	//Called on different game states
-	void GameWin();
-
-	void GameOver();
 	
 	bool bIsGameOver = false;
 };

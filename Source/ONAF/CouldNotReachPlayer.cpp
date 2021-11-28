@@ -26,6 +26,8 @@ EBTNodeResult::Type UCouldNotReachPlayer::ExecuteTask(UBehaviorTreeComponent& Ow
         		
         AICharacter->GetCharacterMovement()->MaxWalkSpeed = 150.f;
 		BBComp->ClearValue("LocationToGo");
+		BBComp->ClearValue("PlayerLocation");
+		BBComp->SetValueAsBool("CanMove", true);
         return EBTNodeResult::Succeeded;
 	}
 
