@@ -32,6 +32,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Actions") FORCEINLINE
 	EPlayerRotState GetCurrentState() {return State;}
 
+	//Music box stuff
 	UFUNCTION(BlueprintImplementableEvent, Category = "Actions")
 	void RunToHallway();
 
@@ -43,6 +44,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetCanRotate(bool NewState);
+
+	//Switching the flashlight
+	UFUNCTION(BlueprintImplementableEvent, Category = "Actions")
+	void SwitchFlashlight();
 	
 protected:
 	// Called when the game starts or when spawned

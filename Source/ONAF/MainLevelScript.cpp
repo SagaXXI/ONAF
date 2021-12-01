@@ -57,12 +57,23 @@ void AMainLevelScript::Tick(float DeltaSeconds)
 	}
 	if(PlayerController->GetMusicBoxPercent() <= 0.f)
 	{
-		//Jumpscare if the music box percentage is 0
-		PuppetJumpscare();
+		if(NeedToJumpscare)
+		{
+			//Jumpscare if the music box percentage is
+			PuppetJumpscare();
+			NeedToJumpscare = false;
+		}
 	}
 	if(PlayerController->GetPower() <= 0.f)
 	{
-		CloseDoor();
+		if(NeedToJumpscare)
+		{
+			CloseDoor();
+			Player->SwitchFlashlight();
+			PuppetJumpscare();
+			NeedToJumpscare = false;
+		}
+		
 	}
 }
 
@@ -94,7 +105,8 @@ void AMainLevelScript::ActionsOnState()
 
 void AMainLevelScript::Front()
 {
-	//Later I will add some functionality to it
+	//Turning the flashlight on and off
+	Player->SwitchFlashlight();
 }
 
 void AMainLevelScript::Back()

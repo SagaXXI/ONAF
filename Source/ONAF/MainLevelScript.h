@@ -57,6 +57,9 @@ class ONAF_API AMainLevelScript : public ALevelScriptActor
 
 	//First (Player's real) Camera
 	AActor* FirstCamera = nullptr;
+
+	//Used to control the jumpscare appearence
+	bool NeedToJumpscare = true;
 public:
 
 	class APlayerCharacter* Player;

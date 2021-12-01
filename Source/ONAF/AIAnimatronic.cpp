@@ -25,7 +25,7 @@ void AAIAnimatronic::BeginPlay()
 		PawnSensing->OnSeePawn.AddDynamic(this, &AAIAnimatronic::OnPlayerCaught);
 	}
 
-	GetCharacterMovement()->MaxWalkSpeed = 150.f;
+	GetCharacterMovement()->MaxWalkSpeed = 110.f;
 	
 }
 

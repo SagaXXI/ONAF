@@ -54,8 +54,11 @@ public:
 
 	FORCEINLINE UBlackboardComponent* GetBBComp() {return BBComp; }
 
-	UPROPERTY(EditAnywhere, Category = "AI Movement", meta = (BlueprintProtected = true))
+	UPROPERTY(EditAnywhere, Category = "AI Movement")
 	float MovementRadius = 2000.f;
+
+	UPROPERTY(EditAnywhere ,BlueprintReadWrite, Category = "FX")
+	bool IsFreddyThumped = false;
 
 protected:
 

@@ -7,9 +7,7 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
-//Add fx (walking sound, freddy beating)
-//Fix the game win after a game over (game win widget is popping out even if freddy killed you right now)
-//maybe (maybe) add phone calls
+//TODO finish settings widget
 
 void ASecurityGuardController::BeginPlay()
 {
@@ -101,15 +99,13 @@ void ASecurityGuardController::TimeTracking()
 
 void ASecurityGuardController::GameWin()
 {
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 	UGameplayStatics::PlaySound2D(GetWorld(), VictorySound);
 	CameraWidget->RemoveFromParent();
 	UUserWidget* GameWin = CreateWidget<UUserWidget>(this, GameWinWidget, TEXT("GameOver"));
 	if(GameWin)
 	{
 		GameWin->AddToViewport();
-		//Setting input mode only UI
-		/*UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(
-			this, GameWin);*/
 		SetShowMouseCursor(true);
 		UWidgetBlueprintLibrary::SetInputMode_UIOnly(this, GameWin);
 	}	
@@ -117,6 +113,7 @@ void ASecurityGuardController::GameWin()
 
 void ASecurityGuardController::GameOver()
 {
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 	bIsGameOver = true;
 	CameraWidget->RemoveFromParent();
 	UUserWidget* GameOver = CreateWidget<UUserWidget>(this, GameOverWidget, TEXT("GameOver"));
